@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/weather_nav"
+    app:startDestination="@id/dailyFragment">
+
+    <fragment
+        android:id="@+id/dailyFragment"
+        android:name="com.example.testweather.ui.daily.DailyFragment"
+        android:label="DailyFragment" />
+    <fragment
+        android:id="@+id/weeklyFragment"
+        android:name="com.example.testweather.ui.weekly.WeeklyFragment"
+        android:label="WeeklyFragment" />
+</navigation>

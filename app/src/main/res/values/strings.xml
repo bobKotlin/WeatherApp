@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TestWeather</string>
+
+    <string name="error_404">Error 404</string>
+    <string name="please_turn_on_the_internet">please turn on the internet</string>
+    <string name="refresh">Refresh</string>
+    <string name="today">Today</string>
+    <string name="week">Week</string>
+    <string name="wind">Wind</string>
+    <string name="rain">Rain</string>
+    <string name="humidity">Humidity</string>
+    <string name="celsius"> \u00B0C</string>
+    <string name="max">max: </string>
+    <string name="min">min: </string>
+
+    <string-array name="list_country_name">
+        <item>My Location</item>
+        <item>Washington</item>
+        <item>Ottawa</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Praha</item>
+        <item>Roma</item>
+        <item>Riga</item>
+        <item>Warszawa</item>
+        <item>Kyiv</item>
+    </string-array>
+</resources>
