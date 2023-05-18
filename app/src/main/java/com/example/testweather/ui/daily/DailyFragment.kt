@@ -2,6 +2,7 @@ package com.example.testweather.ui.daily
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,8 @@ class DailyFragment : Fragment() {
                 binding.txtDayOfWeek.text = it.stringDateLong
                 binding.txtSun.text = it.descriptionSun
 
+
+                binding.chartTemperatureByHour.init(it)
             }
         }
     }

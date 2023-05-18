@@ -3,6 +3,7 @@ package com.example.testweather.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.testweather.utils.Constants
+import java.util.Locale
 
 @Entity(tableName = "location")
 data class Location(

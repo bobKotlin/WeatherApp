@@ -16,7 +16,7 @@ import com.example.testweather.model.weather.WeatherListFor3Hours
     CityConverter::class,
     WeatherFor3HoursConverter::class
 )
-@Database(entities = [WeatherListFor3Hours::class, Location::class], version = 10, exportSchema = true)
+@Database(entities = [WeatherListFor3Hours::class, Location::class], version = 11, exportSchema = true)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getWeatherDao(): WeatherDao

@@ -8,6 +8,7 @@ import com.example.testweather.utils.toCelsius
 import com.example.testweather.utils.toDayOfMonth
 import com.example.testweather.utils.toDateLongString
 import com.example.testweather.utils.toDateShortString
+import com.example.testweather.utils.toTimeString
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -46,6 +47,8 @@ class WeatherForDayConverter {
         var generalAverageTemperature: Float? = null
         var generalAverageWind: Float? = null
         var generalAverageHumidity: Float? = null
+        val generalListAverageTemperature = mutableListOf<Float>()
+        val generalStringTime = mutableListOf<String>()
 
         weatherFor3HoursList?.forEach { weatherFor3Hours ->
 
@@ -53,12 +56,16 @@ class WeatherForDayConverter {
             val localDay = localDayDouble.toDayOfMonth()
             val localStringDateLong = weatherFor3Hours.dt.toDateLongString()
             val localStringDateShort = weatherFor3Hours.dt.toDateShortString()
+            val localStringTime = weatherFor3Hours.dt.toTimeString()
             val localMaxTemperature = weatherFor3Hours.main.temp_max.toCelsius()
             val localMinTemperature = weatherFor3Hours.main.temp_min.toCelsius()
             val localAverageWind = weatherFor3Hours.wind.speed
             val localAverageHumidity = weatherFor3Hours.wind.speed
             val localMaxProbablyRain = weatherFor3Hours.pop
             val localAverageTemperature = (localMaxTemperature + localMinTemperature) / 2
+
+            generalListAverageTemperature.add(localAverageTemperature)
+            generalStringTime.add(localStringTime)
 
             if (localMaxTemperature > generalMaxTemperature) {
                 generalMaxTemperature = localMaxTemperature
@@ -102,7 +109,6 @@ class WeatherForDayConverter {
 
             if (localDay > generalDay) {
                 generalDay = localDay
-
                 val weatherForDay =
                     WeatherForDay(
                         maxTempInDayCelsius = generalMaxTemperature,
@@ -111,13 +117,15 @@ class WeatherForDayConverter {
                         averageWindInDay = generalAverageWind ?: 0f,
                         averageHumidityInDay = generalAverageHumidity ?: 0f,
                         maxProbabilityRainInDay = generalMaxProbablyRain,
-                        minDateInteger = generalMinDateInteger,
-                        maxDateInteger = generalMaxDateInteger,
                         stringDateLong = localStringDateLong,
                         stringDateShort = localStringDateShort,
                         descriptionSun = weatherFor3Hours.weather.first().description,
-
+                        listAverageTempInDayCelsius = generalListAverageTemperature.toList(),
+                        listStringTime = generalStringTime.toList(),
                     )
+
+                listWeatherForDay.add(weatherForDay)
+
 
                 generalMaxTemperature = 0f
                 generalMinTemperature = 0f
@@ -127,11 +135,13 @@ class WeatherForDayConverter {
                 generalAverageTemperature = null
                 generalAverageWind = null
                 generalAverageHumidity = null
+                generalListAverageTemperature.clear()
+                generalStringTime.clear()
 
-                listWeatherForDay.add(weatherForDay)
             }
 
         }
+        listWeatherForDay.removeAt(0)
         return listWeatherForDay
     }
 

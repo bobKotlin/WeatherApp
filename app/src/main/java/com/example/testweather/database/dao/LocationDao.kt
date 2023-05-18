@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.testweather.model.Location
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocationDao {
@@ -16,6 +17,6 @@ interface LocationDao {
 
     @WorkerThread
     @Query("SELECT * FROM location")
-    suspend fun getLastLocation(): Location?
+    fun getLastLocation(): Flow<Location?>
 
 }

@@ -27,7 +27,6 @@ class WeeklyViewModel @Inject constructor(private val weatherRepository: Weather
     init {
         viewModelScope.launch {
             weatherListFor3Hours.collect {
-                Log.d("TagProj", "_weatherForDay: ${WeatherForDayConverter().listWeatherFor3HoursToListWeatherForDay(it?.list)}")
                 _weatherForDay.value =
                     WeatherForDayConverter().listWeatherFor3HoursToListWeatherForDay(it?.list)
             }

@@ -22,11 +22,11 @@ data class WeatherForDay(
     var averageWindInDay: Float,
     var averageHumidityInDay: Float,
     var maxProbabilityRainInDay: Float,
-    var minDateInteger: Int,
-    var maxDateInteger: Int,
     var stringDateLong: String,
     var stringDateShort: String,
     var descriptionSun: String,
+    var listAverageTempInDayCelsius: List<Float>,
+    var listStringTime: List<String>,
 )
 
 data class City(

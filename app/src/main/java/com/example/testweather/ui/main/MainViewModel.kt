@@ -1,6 +1,5 @@
 package com.example.testweather.ui.main
 
-import android.location.Location
 import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
@@ -11,8 +10,7 @@ import com.example.testweather.utils.LocationRecipient
 import com.example.testweather.utils.SelectLocationMenu
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,21 +22,11 @@ class MainViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _cityName: MutableStateFlow<String?> = MutableStateFlow(null)
-    val cityName = _cityName.asStateFlow()
+    val location = weatherRepository.lastLocationDao
 
-
-    init {
-        viewModelScope.launch {
-            val lastLocation = weatherRepository.getLastLocation()
-            _cityName.value = lastLocation?.nameCity
-        }
-
-    }
 
     fun clickOnSelectLocation(textView: TextView) {
         selectLocationMenu.showMenu(textView) { cityName ->
-
             viewModelScope.launch(Dispatchers.IO) {
                 val lastLocation = weatherRepository.getLastLocation()
                 val newLocation = lastLocation?.copy(nameCity = cityName)
@@ -71,7 +59,6 @@ class MainViewModel @Inject constructor(
                 "getWeatherFromServiceByLatLon: ${weatherListDays.list.size}"
             )
             weatherRepository.saveWeather(weatherListDays)
-            _cityName.value = weatherListDays.city.name
 
         }
     }
@@ -84,8 +71,6 @@ class MainViewModel @Inject constructor(
                 "getWeatherFromServiceByCityName: ${weatherListDays.list.size}"
             )
             weatherRepository.saveWeather(weatherListDays)
-
-            _cityName.value = weatherListDays.city.name
         }
     }
 

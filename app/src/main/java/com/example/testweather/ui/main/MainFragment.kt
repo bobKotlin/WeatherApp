@@ -66,8 +66,8 @@ class MainFragment : Fragment() {
 
     private fun setupViewModel() {
         lifecycleScope.launch {
-            viewModel.cityName.collect {
-                binding.txtNameCity.text = it
+            viewModel.location.collect {location->
+                binding.txtNameCity.text = location?.nameCity
 
             }
         }

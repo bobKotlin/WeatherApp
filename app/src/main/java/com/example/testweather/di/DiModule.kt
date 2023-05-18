@@ -8,6 +8,7 @@ import com.example.testweather.repository.WeatherRepository
 import com.example.testweather.server.api.WeatherApi
 import com.example.testweather.utils.Constants
 import com.example.testweather.utils.LocationRecipient
+import com.example.testweather.utils.SavingLocale
 import com.example.testweather.utils.SelectLocationMenu
 import com.example.testweather.utils.SharedPrefs
 import com.google.gson.GsonBuilder
@@ -40,10 +41,15 @@ object DiModule {
     fun provideLocationDao(appDatabase: AppDatabase) =
         appDatabase.getLocationDao()
 
+    @Singleton
+    @Provides
+    fun provideSavingLocale(@ApplicationContext context: Context) =
+        SavingLocale(context)
+
 
     @Provides
     @Singleton
-    fun provideWeatherRepository(weatherDao : WeatherDao, locationDao: LocationDao): WeatherRepository {
+    fun provideWeatherRepository(weatherDao : WeatherDao, locationDao: LocationDao, savingLocale: SavingLocale): WeatherRepository {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.urlWeather)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
@@ -51,7 +57,7 @@ object DiModule {
 
         val weatherApi = retrofit.create(WeatherApi::class.java)
 
-        return WeatherRepository(weatherDao,locationDao, weatherApi)
+        return WeatherRepository(weatherDao,locationDao, weatherApi, savingLocale)
     }
 
     @Singleton
@@ -68,6 +74,7 @@ object DiModule {
     @Provides
     fun provideSelectLocationMenu(@ApplicationContext context: Context) =
         SelectLocationMenu(context)
+
 
 
 }

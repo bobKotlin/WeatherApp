@@ -3,12 +3,9 @@ package com.example.testweather.ui.splash
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
-import com.example.testweather.permission.LocationPermissionAsker
 import com.example.testweather.repository.WeatherRepository
 import com.example.testweather.utils.Constants
 import com.example.testweather.utils.LocationRecipient
-import com.example.testweather.utils.SharedPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,23 +17,26 @@ import javax.inject.Inject
 class SplashScreenViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val locationRecipient: LocationRecipient
-    ) :
+) :
     ViewModel() {
 
     private val _progress = MutableStateFlow(false)
     val process = _progress.asStateFlow()
 
 
-    fun getLocation(){
+
+    fun getLocation() {
         viewModelScope.launch(Dispatchers.IO) {
             val lastLocation = weatherRepository.getLastLocation()
 
-            if (lastLocation == null || lastLocation.nameCity == Constants.MY_LOCATION){
+
+            if (lastLocation == null || lastLocation.nameCity == Constants.MY_LOCATION) {
                 locationRecipient.getLocation(lastLocation) { location ->
                     getWeatherFromServiceByLatLon(location.latitude, location.longitude)
                 }
-            }else
+            } else {
                 getWeatherFromServiceByCityName(lastLocation.nameCity)
+            }
 
         }
 
@@ -45,7 +45,10 @@ class SplashScreenViewModel @Inject constructor(
     private fun getWeatherFromServiceByLatLon(lat: Double, lon: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             val weatherListDays = weatherRepository.getWeatherFromServiceByLatLon(lat, lon)
-            Log.d("TagSplashViewModel", "getWeatherFromServiceByLatLon: ${weatherListDays.list.size}")
+            Log.d(
+                "TagSplashViewModel",
+                "getWeatherFromServiceByLatLon: ${weatherListDays.list.size}"
+            )
             weatherRepository.saveWeather(weatherListDays)
             _progress.value = true
         }
@@ -54,12 +57,14 @@ class SplashScreenViewModel @Inject constructor(
     private fun getWeatherFromServiceByCityName(cityName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val weatherListDays = weatherRepository.getWeatherFromServiceByCityName(cityName)
-            Log.d("TagSplashViewModel", "getWeatherFromServiceByCityName: ${weatherListDays.list.size}")
+            Log.d(
+                "TagSplashViewModel",
+                "getWeatherFromServiceByCityName: ${weatherListDays.list.size}"
+            )
             weatherRepository.saveWeather(weatherListDays)
             _progress.value = true
         }
     }
-
 
 
 }

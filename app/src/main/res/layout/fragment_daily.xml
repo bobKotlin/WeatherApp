@@ -12,7 +12,7 @@
         android:layout_marginTop="30dp"
         android:text="40C"
         android:textColor="@color/white"
-        android:textSize="102sp"
+        android:textSize="82sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +54,8 @@
 
         <ImageView
             android:id="@+id/imgWind"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:padding="5dp"
             android:src="@drawable/ic_wind"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,9 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="20 mph"
+            android:text="20 m/s"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgWind" />
@@ -102,8 +102,8 @@
 
         <ImageView
             android:id="@+id/imgRain"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:padding="5dp"
             android:src="@drawable/ic_rain"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +118,7 @@
             android:layout_marginTop="10dp"
             android:text="20 %"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgRain" />
@@ -150,8 +150,8 @@
 
         <ImageView
             android:id="@+id/imgHumidity"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:padding="5dp"
             android:src="@drawable/ic_humidity"
             app:layout_constraintEnd_toEndOf="parent"
@@ -166,7 +166,7 @@
             android:layout_marginTop="10dp"
             android:text="20 %"
             android:textColor="@color/white"
-            android:textSize="32sp"
+            android:textSize="26sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgHumidity" />
@@ -186,5 +186,16 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.example.testweather.customviews.ChartTemperatureByHour
+        android:id="@+id/chartTemperatureByHour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintRain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

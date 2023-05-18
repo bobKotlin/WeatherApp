@@ -35,7 +35,6 @@ class DailyViewModel @Inject constructor(private val weatherRepository: WeatherR
         viewModelScope.launch {
             weatherListDays.collect {
                 if (!it?.list.isNullOrEmpty()){
-                    Log.d("TagProj", "getWeatherTodayDay: ")
                     _weatherOneDay.value = weatherForDayConverter.listWeatherFor3HoursToListWeatherForDay(it?.list).first()
                 }
 
