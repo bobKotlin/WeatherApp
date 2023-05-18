@@ -2,7 +2,6 @@ package com.example.testweather.ui.daily
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.testweather.R
-import com.example.testweather.database.converters.WeatherFor3HoursConverter
 import com.example.testweather.database.converters.WeatherForDayConverter
 import com.example.testweather.databinding.FragmentDailyBinding
 import com.example.testweather.utils.Constants
-import com.example.testweather.utils.toCelsius
-import com.example.testweather.utils.toDateLongString
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -74,7 +70,7 @@ class DailyFragment : Fragment() {
 
     private fun getArgument() {
         val jsonStringWeatherByDay =
-            arguments?.getString(Constants.ACTION_WEEKLY_TO_DAILY_WITH_WEATHER)
+            arguments?.getString(Constants.SEND_WEATHER_WEATHER_FOR_DAY_KEY)
 
         if (jsonStringWeatherByDay != null) {
             val weatherByDay = weatherForDayConverter.stringToWeatherForDay(jsonStringWeatherByDay)

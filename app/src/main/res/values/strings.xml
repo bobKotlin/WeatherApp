@@ -2,8 +2,9 @@
     <string name="app_name">TestWeather</string>
 
     <string name="error_404">Error 404</string>
-    <string name="please_turn_on_the_internet">please turn on the internet</string>
+    <string name="please_turn_on_the_internet">Please turn on the internet</string>
     <string name="refresh">Refresh</string>
+    <string name="offline">Offline</string>
     <string name="today">Today</string>
     <string name="week">Week</string>
     <string name="wind">Wind</string>

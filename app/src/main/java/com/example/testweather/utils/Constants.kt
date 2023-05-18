@@ -8,7 +8,9 @@ object Constants {
     const val APP_SHARED_PREFS = "app_shared_prefs"
     const val LOCATION_PERMISSION_IS_GRANTED_PREFS = "location_permission_is_granted_prefs"
 
-    const val ACTION_WEEKLY_TO_DAILY_WITH_WEATHER = "action_weekly_to_daily_with_weather"
+    const val SEND_WEATHER_WEATHER_FOR_DAY_KEY = "send_weather_weather_for_day_key"
+    const val SEND_CITY_NAME_KEY = "send_city_name_key"
 
     const val MY_LOCATION = "My Location"
+
 }

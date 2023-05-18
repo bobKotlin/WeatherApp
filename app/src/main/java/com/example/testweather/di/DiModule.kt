@@ -1,17 +1,17 @@
 package com.example.testweather.di
 
 import android.content.Context
-import com.example.testweather.database.dao.WeatherDao
 import com.example.testweather.database.AppDatabase
 import com.example.testweather.database.dao.LocationDao
+import com.example.testweather.database.dao.WeatherDao
+import com.example.testweather.other.InternetChecking
+import com.example.testweather.other.LocationRecipient
+import com.example.testweather.other.SelectLocationMenu
 import com.example.testweather.repository.WeatherRepository
 import com.example.testweather.server.api.WeatherApi
 import com.example.testweather.utils.Constants
-import com.example.testweather.utils.LocationRecipient
 import com.example.testweather.utils.SavingLocale
-import com.example.testweather.utils.SelectLocationMenu
 import com.example.testweather.utils.SharedPrefs
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,7 +52,7 @@ object DiModule {
     fun provideWeatherRepository(weatherDao : WeatherDao, locationDao: LocationDao, savingLocale: SavingLocale): WeatherRepository {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.urlWeather)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val weatherApi = retrofit.create(WeatherApi::class.java)
@@ -74,6 +74,11 @@ object DiModule {
     @Provides
     fun provideSelectLocationMenu(@ApplicationContext context: Context) =
         SelectLocationMenu(context)
+
+    @Singleton
+    @Provides
+    fun provideInternetChecking(@ApplicationContext context: Context) =
+        InternetChecking(context)
 
 
 

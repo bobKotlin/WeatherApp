@@ -157,25 +157,19 @@ class ChartTemperatureByHour @JvmOverloads constructor(
         val maxTemperature = minMaxTempRoundTo5.second
 
         val tempBetweenMinMax = maxTemperature - minTemperature
-        Log.d("TagProj", "$maxTemperature - $minTemperature = $tempBetweenMinMax")
 
         val listWeatherTemperature = weatherForDay?.listAverageTempInDayCelsius ?: listOf()
 
         var previousTempY: Float? = null
         listWeatherTemperature.forEachIndexed { index, temp ->
             var percentTemp = temp / tempBetweenMinMax
-            Log.d("TagProj", "$temp  / $tempBetweenMinMax $percentTemp")
 
             val localTempY = (startYView + padding) * percentTemp
 
             15 - 100
             13 - x
             if (previousTempY != null) {
-                Log.d("TagProj", "firstX: ${listCoordsTime[index]?.x ?: 0f}")
-                Log.d("TagProj", "secX: ${listCoordsTime[index - 1]?.x ?: 0f}")
-                Log.d("TagProj", "localTempY: $localTempY")
-                Log.d("TagProj", "previousTempY: $previousTempY")
-                canvas.drawLine(
+             canvas.drawLine(
                     listCoordsTime[index]?.x ?: 0f,
                     localTempY,
                     listCoordsTime[index - 1]?.x ?: 0f,
