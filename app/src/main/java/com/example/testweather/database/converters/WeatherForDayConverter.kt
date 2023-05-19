@@ -38,7 +38,7 @@ class WeatherForDayConverter {
     fun listWeatherFor3HoursToListWeatherForDay(weatherFor3HoursList: List<WeatherFor3Hours>?): List<WeatherForDay> {
         val listWeatherForDay = mutableListOf<WeatherForDay>()
 
-        var generalDay:Int? = 0
+        var generalDay:Int? = null
         var generalMaxTemperature = 0f
         var generalMinTemperature = 0f
         var generalMinDateInteger = 0
@@ -116,6 +116,7 @@ class WeatherForDayConverter {
 
 
             if (localDay > generalDay!!) {
+                Log.d("TagProj", "conv localDay путукфеув: $localDay")
                 generalDay = localDay
                 val weatherForDay =
                     WeatherForDay(
@@ -149,7 +150,6 @@ class WeatherForDayConverter {
             }
 
         }
-        listWeatherForDay.removeAt(0)
         return listWeatherForDay
     }
 

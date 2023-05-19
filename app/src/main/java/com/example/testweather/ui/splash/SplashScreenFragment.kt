@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testweather.R
 import com.example.testweather.databinding.FragmentSplashScreenBinding
-import com.example.testweather.other.InternetChecking
 import com.example.testweather.permission.LocationPermissionAsker
 import com.example.testweather.utils.Constants
 import com.example.testweather.utils.SharedPrefs
@@ -51,10 +50,9 @@ class SplashScreenFragment : Fragment() {
     }
 
     private fun requestWeatherService() {
-
         if (sharedPrefs.locationPermissionIsGranted) {
             val cityName = getCityNameFromArguments()
-            viewModel.getLocation(cityName) { isHaveInternet ->
+            viewModel.updateWeather(cityName) { isHaveInternet ->
                 checkInternet(isHaveInternet)
             }
         } else {
@@ -64,7 +62,7 @@ class SplashScreenFragment : Fragment() {
             locationPermissionAsker.showSystemDialog { isGranted ->
                 sharedPrefs.locationPermissionIsGranted = isGranted
                 if (isGranted) {
-                    viewModel.getLocation { isHaveInternet ->
+                    viewModel.updateWeather { isHaveInternet ->
                         checkInternet(isHaveInternet)
                     }
                 }
@@ -92,7 +90,7 @@ class SplashScreenFragment : Fragment() {
 
     private fun setupViewModel() {
         lifecycleScope.launch {
-            viewModel.process.collect {
+            viewModel.isLoaded.collect {
                 if (it)
                     findNavController().navigate(R.id.mainFragment)
 

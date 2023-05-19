@@ -1,10 +1,12 @@
 package com.example.testweather.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +34,7 @@ class MainFragment : Fragment() {
     private val weatherForDayConverter = WeatherForDayConverter()
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,16 +48,45 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+        setupOnBackPressed()
         setupBottomNavBar()
         setupListenerFromWeek()
+        setupClickListeners()
+        setupViewModel()
 
-        binding.txtNameCity.text = viewModel.getCityName()
+
+    }
+
+    private fun setupOnBackPressed(){
+        val onBackPressedCallback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                requireActivity().finishAffinity()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+    }
+
+    private fun setupClickListeners(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            val isRefreshing = binding.swipeRefreshLayout.isRefreshing
+
+            if (isRefreshing)
+                viewModel.updateWeather { isHaveInternet ->
+                    checkInternet(isHaveInternet)
+                }
+
+        }
+
 
         binding.txtNameCity.setOnClickListener {
             viewModel.clickOnSelectLocation(binding.txtNameCity) { cityName ->
-                val bundle = Bundle()
-                bundle.putString(Constants.SEND_CITY_NAME_KEY, cityName)
-                findNavController().navigate(R.id.splashScreenFragment, bundle)
+                binding.swipeRefreshLayout.isRefreshing = true
+
+                viewModel.updateWeather(cityName) { isHaveInternet ->
+                    checkInternet(isHaveInternet)
+                }
             }
         }
 
@@ -65,6 +97,20 @@ class MainFragment : Fragment() {
             childFragmentManager.findFragmentById(R.id.containerFragmentMain) as NavHostFragment
 
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+
+    }
+
+    private fun setupViewModel() {
+        lifecycleScope.launch {
+            viewModel.isLoaded.collect {
+                if (it){
+                    binding.swipeRefreshLayout.isRefreshing = false
+
+                    binding.txtNameCity.text = viewModel.getCityName()
+                }
+
+            }
+        }
 
     }
 

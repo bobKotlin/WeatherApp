@@ -10,6 +10,7 @@ import com.example.testweather.other.LocationRecipient
 import com.example.testweather.other.SelectLocationMenu
 import com.example.testweather.model.Location
 import com.example.testweather.other.InternetChecking
+import com.example.testweather.ui.WeatherViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +21,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val selectLocationMenu: SelectLocationMenu
-) :
-    ViewModel() {
+    private val locationRecipient: LocationRecipient,
+    private val internetChecking: InternetChecking,
+    private val selectLocationMenu: SelectLocationMenu,
+) : WeatherViewModel(weatherRepository, locationRecipient, internetChecking){
 
     fun getCityName():String{
         return weatherRepository.getLastLocation()?.nameCity ?: Constants.MY_LOCATION
