@@ -15,9 +15,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LocationRecipient(private val context: Context, private val locationDao: LocationDao) {
+class LocationRecipient(private val context: Context) {
 
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     @SuppressLint("MissingPermission")
     fun getLocation(lastLocationDao: Location?, callbackLocation: (location: Location) -> Unit) {
@@ -43,11 +42,6 @@ class LocationRecipient(private val context: Context, private val locationDao: L
                 }
 
                 callbackLocation.invoke(location)
-
-                coroutineScope.launch {
-                    locationDao.insertLocation(location)
-                }
-
 
             }
         }

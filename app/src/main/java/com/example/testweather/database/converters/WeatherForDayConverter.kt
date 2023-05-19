@@ -105,10 +105,6 @@ class WeatherForDayConverter {
                 generalAverageHumidity =
                     ((generalAverageHumidity!! + localAverageHumidity) / 2).roundToHalf()
 
-
-            Log.d("TagProj", "conv localDay: $localDay")
-            Log.d("TagProj", "conv generalDay: $generalDay")
-
             if (generalDay == null){
                 generalDay = localDay
                 return@forEach
@@ -116,7 +112,6 @@ class WeatherForDayConverter {
 
 
             if (localDay > generalDay!!) {
-                Log.d("TagProj", "conv localDay путукфеув: $localDay")
                 generalDay = localDay
                 val weatherForDay =
                     WeatherForDay(

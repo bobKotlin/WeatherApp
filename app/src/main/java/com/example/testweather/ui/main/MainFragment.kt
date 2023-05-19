@@ -34,7 +34,6 @@ class MainFragment : Fragment() {
     private val weatherForDayConverter = WeatherForDayConverter()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,8 +58,8 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun setupOnBackPressed(){
-        val onBackPressedCallback = object : OnBackPressedCallback(true){
+    private fun setupOnBackPressed() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 requireActivity().finishAffinity()
             }
@@ -68,7 +67,7 @@ class MainFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
     }
 
-    private fun setupClickListeners(){
+    private fun setupClickListeners() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             val isRefreshing = binding.swipeRefreshLayout.isRefreshing
 
@@ -102,13 +101,21 @@ class MainFragment : Fragment() {
 
     private fun setupViewModel() {
         lifecycleScope.launch {
+            viewModel.location.collect {
+                Log.d("TagProj", "location: $it")
+                binding.txtNameCity.text = it?.nameCity
+
+            }
+
+        }
+        lifecycleScope.launch {
             viewModel.isLoaded.collect {
-                if (it){
+                Log.d("TagProj", "location: $it")
+
+                if (it) {
                     binding.swipeRefreshLayout.isRefreshing = false
 
-                    binding.txtNameCity.text = viewModel.getCityName()
                 }
-
             }
         }
 

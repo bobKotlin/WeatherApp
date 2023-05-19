@@ -5,13 +5,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
+import com.example.testweather.R
 import com.example.testweather.model.weather.WeatherForDay
 import com.example.testweather.utils.roundTo5
 
 class ChartTemperatureByHour @JvmOverloads constructor(
-    context: Context,
+    private val context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
@@ -28,27 +28,27 @@ class ChartTemperatureByHour @JvmOverloads constructor(
 
     private var padding = 40f
 
-    private var paintBlackLine = Paint()
+    private var paintWhiteLine = Paint()
     private var paintGreyLine = Paint()
-    private var paintBlackText = Paint()
+    private var paintWhiteText = Paint()
 
 
     fun init(weatherForDay: WeatherForDay) {
         this.weatherForDay = weatherForDay
         invalidate()
 
-        paintBlackLine.apply {
-            color = Color.BLACK
+        paintWhiteLine.apply {
+            color = Color.WHITE
             strokeWidth = 5f
         }
 
         paintGreyLine.apply {
-            color = Color.GRAY
+            color = context.getColor(R.color.white_transparently)
             strokeWidth = 2f
         }
 
-        paintBlackText.apply {
-            color = Color.BLACK
+        paintWhiteText.apply {
+            color = Color.WHITE
             textSize = 22f
         }
 
@@ -68,22 +68,6 @@ class ChartTemperatureByHour @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-//        canvas.drawLine(
-//            startXView + padding,
-//            endYView - padding,
-//            startXView + padding,
-//            startYView + padding,
-//            paintBlackLine,
-//        )
-//
-//        canvas.drawLine(
-//            startXView + padding,
-//            endYView - padding,
-//            endXView - padding,
-//            endYView - padding,
-//            paintBlackLine,
-//        )
 
         drawVerticalText(canvas)
         drawHorizontalText(canvas)
@@ -113,7 +97,7 @@ class ChartTemperatureByHour @JvmOverloads constructor(
 
             previousYText = localY
 
-            canvas.drawText(temp.toString(), localX, localY, paintBlackText)
+            canvas.drawText("$temp " + context.getText(R.string.celsius), localX, localY, paintWhiteText)
 
             canvas.drawLine(
                 localX,
@@ -142,7 +126,7 @@ class ChartTemperatureByHour @JvmOverloads constructor(
 
             previousXText = localX
 
-            canvas.drawText(time, localX, localY, paintBlackText)
+            canvas.drawText(time, localX, localY, paintWhiteText)
             localListCoordsTime.add(Coord(localX, localY))
         }
         listCoordsTime = localListCoordsTime
@@ -174,7 +158,7 @@ class ChartTemperatureByHour @JvmOverloads constructor(
                     localTempY,
                     listCoordsTime[index - 1]?.x ?: 0f,
                     previousTempY!!,
-                    paintBlackLine
+                    paintWhiteLine
                 )
             }
             previousTempY = localTempY

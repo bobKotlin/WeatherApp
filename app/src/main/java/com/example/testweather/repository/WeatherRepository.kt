@@ -1,5 +1,6 @@
 package com.example.testweather.repository
 
+import android.util.Log
 import com.example.testweather.database.dao.LocationDao
 import com.example.testweather.database.dao.WeatherDao
 import com.example.testweather.model.Location
@@ -103,6 +104,11 @@ class WeatherRepository(
                         nameCity = weather5Days.city.name
                     )
                 )
+                Log.d("TagProj", "handleWeatherRequest: ${Location(
+                    latitude = latitude,
+                    longitude = longitude,
+                    nameCity = weather5Days.city.name
+                )}")
                 savingLocale.setupLocale(latitude, longitude)
 
                 result.invoke(weather5Days)

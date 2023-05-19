@@ -26,10 +26,9 @@ class MainViewModel @Inject constructor(
     private val selectLocationMenu: SelectLocationMenu,
 ) : WeatherViewModel(weatherRepository, locationRecipient, internetChecking){
 
-    fun getCityName():String{
-        return weatherRepository.getLastLocation()?.nameCity ?: Constants.MY_LOCATION
-    }
-    fun clickOnSelectLocation(textView: TextView, cityNameListener:(cityName:String)->Unit) {
+    val location = weatherRepository.lastLocationDao
+
+    fun clickOnSelectLocation(textView: TextView, cityNameListener:(cityName:String?)->Unit) {
         selectLocationMenu.showMenu(textView, cityNameListener)
     }
 

@@ -67,8 +67,8 @@ object DiModule {
 
     @Singleton
     @Provides
-    fun provideLocationRecipient(@ApplicationContext context: Context, dao: LocationDao) =
-        LocationRecipient(context, dao)
+    fun provideLocationRecipient(@ApplicationContext context: Context) =
+        LocationRecipient(context)
 
     @Singleton
     @Provides

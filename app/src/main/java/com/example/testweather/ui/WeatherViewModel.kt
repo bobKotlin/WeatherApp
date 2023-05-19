@@ -34,17 +34,13 @@ open class WeatherViewModel(
 
             val lastLocation = weatherRepository.getLastLocation()
 
-            if (lastLocation == null || lastLocation.nameCity == Constants.MY_LOCATION) {
-                locationRecipient.getLocation(lastLocation) { location ->
-                    getWeatherFromServiceByLatLon(location.latitude, location.longitude) {
-                        checkOnInternet.invoke(internetChecking.isInternetConnected())
-                    }
-                }
-            } else {
-                getWeatherFromServiceByCityName(lastLocation.nameCity) {
+
+            locationRecipient.getLocation(lastLocation) { location ->
+                getWeatherFromServiceByLatLon(location.latitude, location.longitude) {
                     checkOnInternet.invoke(internetChecking.isInternetConnected())
                 }
             }
+
 
         }
 
@@ -59,6 +55,7 @@ open class WeatherViewModel(
             weatherRepository.getWeatherFromServiceByLatLon(lat, lon) { weatherListDays ->
                 if (weatherListDays != null) {
                     weatherRepository.saveWeather(weatherListDays)
+
                     _isLoaded.value = true
                 } else
                     checkInternet()
