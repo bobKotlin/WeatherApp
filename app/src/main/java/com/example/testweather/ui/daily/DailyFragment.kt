@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.testweather.R
 import com.example.testweather.database.converters.WeatherForDayConverter
 import com.example.testweather.databinding.FragmentDailyBinding
@@ -43,6 +45,15 @@ class DailyFragment : Fragment() {
         getArgument()
     }
 
+    private fun setupOnBackPressed() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun setupViewModel() {
         lifecycleScope.launch {
@@ -75,6 +86,7 @@ class DailyFragment : Fragment() {
         if (jsonStringWeatherByDay != null) {
             val weatherByDay = weatherForDayConverter.stringToWeatherForDay(jsonStringWeatherByDay)
             viewModel.getWeatherByDay(weatherByDay)
+            setupOnBackPressed()
         } else {
             viewModel.getWeatherTodayDay()
         }

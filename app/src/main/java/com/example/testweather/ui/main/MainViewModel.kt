@@ -32,4 +32,8 @@ class MainViewModel @Inject constructor(
         selectLocationMenu.showMenu(textView, cityNameListener)
     }
 
+    fun getLastLocation():Location? {
+        return weatherRepository.getLastLocation()
+    }
+
 }

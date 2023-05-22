@@ -72,7 +72,7 @@ class MainFragment : Fragment() {
             val isRefreshing = binding.swipeRefreshLayout.isRefreshing
 
             if (isRefreshing)
-                viewModel.updateWeather { isHaveInternet ->
+                viewModel.updateWeather(viewModel.getLastLocation()?.nameCity) { isHaveInternet ->
                     checkInternet(isHaveInternet)
                 }
 
